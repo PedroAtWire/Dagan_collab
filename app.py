@@ -50,7 +50,7 @@ gr.Interface(
     inference,
     [
         gr.inputs.Image(type="pil", label="Source Image"),
-        gr.inputs.Video(label="Driving Video"),
+        gr.inputs.Video(type='mp4',label="Driving Video"),
     ],
     gr.outputs.Video(type="mp4", label="Output"),
     title=title,
