@@ -42,17 +42,17 @@ def inference(img, video):
       
     img.save("temp/image.jpg", "JPEG")
     video.save('temp/video.mp4')
-    os.system("python demo_dagan.py --source_image 'temp/image.jpg' --driving_video {} --output 'temp/rst.mp4'".format(video))
+    os.system("python demo_dagan.py --source_image 'temp/image.jpg' --driving_video 'temp/video.mp4/ --output 'temp/rst.mp4'")
 
     return f'temp/rst.mp4'
     
 gr.Interface(
     inference,
     [
-        gr.inputs.Image(type="pil", label="Source Image"),
+        gr.inputs.Image(type="filepath", label="Source Image"),
         gr.inputs.Video(type='mp4',label="Driving Video"),
     ],
-    gr.outputs.Video(type="mp4", label="Output"),
+    gr.outputs.Video(type="mp4", label="Output Video"),
     title=title,
     description=description,
     article=article,
