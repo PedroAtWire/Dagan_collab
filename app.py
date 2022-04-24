@@ -1,7 +1,5 @@
 import os
 import shutil
-import torch
-import cv2
 import gradio as gr
 from PIL import Image
 
