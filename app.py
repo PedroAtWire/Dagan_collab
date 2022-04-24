@@ -8,12 +8,10 @@ from PIL import Image
 # Download sample images
 
 
-examples = [['project/cartoon2.jpg'],
-            ['project/cartoon3.jpg'],
-            ['project/celeb1.jpg'],
-            ['project/celeb2.jpg'],
-            ['project/video1.jpg'],
-            ['project/video2.jpg'],
+examples = [['project/cartoon2.jpg','project/video1.mp4'],
+            ['project/cartoon3.jpg','project/video2.mp4'],
+            ['project/celeb1.jpg','project/video1.mp4'],
+            ['project/celeb2.jpg','project/video2.mp4'],
             ]
 
 
@@ -51,8 +49,8 @@ def inference(img, video):
 gr.Interface(
     inference,
     [
-        gr.inputs.Image(type="pil", label="Input"),
-        gr.inputs.Video(label="Input"),
+        gr.inputs.Image(type="pil", label="Source Image"),
+        gr.inputs.Video(label="Driving Video"),
     ],
     gr.outputs.Video(type="mp4", label="Output"),
     title=title,
