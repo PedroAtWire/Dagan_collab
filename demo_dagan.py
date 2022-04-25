@@ -6,26 +6,17 @@
 import torch
 import torch.nn.functional as F
 import os
-from skimage import img_as_ubyte
-import cv2
 import argparse
-import imageio
-from skimage.transform import resize
 from scipy.spatial import ConvexHull
 from tqdm import tqdm
 import numpy as np
-import modules.generator as G
-import modules.keypoint_detector as KPD
-import yaml
-from collections import OrderedDict
-import depth
 parser = argparse.ArgumentParser(description='Test DaGAN on your own images')
 parser.add_argument('--source_image', default='./temp/source.jpg', type=str, help='Directory of input source image')
 parser.add_argument('--driving_video', default='./temp/driving.mp4', type=str, help='Directory for driving video')
 parser.add_argument('--output', default='./temp/result.mp4', type=str, help='Directory for driving video')
 
 
-# args = parser.parse_args()
+args = parser.parse_args()
 def normalize_kp(kp_source, kp_driving, kp_driving_initial, adapt_movement_scale=False,
                  use_relative_movement=False, use_relative_jacobian=False):
     if adapt_movement_scale:
