@@ -32,9 +32,8 @@ def inference(img, video):
     if not os.path.exists('temp'):
       os.system('mkdir temp')
     ####  Resize the longer edge of the input image
-    cmd = f"ffmpeg -y -ss 00:00:00 -i {video} -to 00:00:08 -c copy temp/driving_video.mp4"
-    subprocess.run(cmd.split())
-    driving_video = "video_input.mp4"
+    os.system("ffmpeg -y -ss 00:00:00 -i {video} -to 00:00:08 -c copy temp/driving_video.mp4")
+    # driving_video = "video_input.mp4"
     os.system("python demo_dagan.py --source_image {} --driving_video 'temp/driving_video.mp4' --output 'temp/rst.mp4'".format(img))
     return f'temp/rst.mp4'
     

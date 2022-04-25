@@ -5,9 +5,7 @@
 
 import torch
 import torch.nn.functional as F
-import os
 from skimage import img_as_ubyte
-import cv2
 import argparse
 import imageio
 from skimage.transform import resize
@@ -123,6 +121,7 @@ def make_animation(source_image, driving_video, generator, kp_detector, relative
     return sources, drivings, predictions,depth_gray
 with open("config/vox-adv-256.yaml") as f:
     config = yaml.load(f)
+
 generator = G.SPADEDepthAwareGenerator(**config['model_params']['generator_params'],**config['model_params']['common_params'])
 config['model_params']['common_params']['num_channels'] = 4
 kp_detector = KPD.KPDetector(**config['model_params']['kp_detector_params'],**config['model_params']['common_params'])
@@ -139,8 +138,8 @@ kp_detector.load_state_dict(ckp_kp_detector)
 
 depth_encoder = depth.ResnetEncoder(18, False)
 depth_decoder = depth.DepthDecoder(num_ch_enc=depth_encoder.num_ch_enc, scales=range(4))
-loaded_dict_enc = torch.load('encoder.pth')
-loaded_dict_dec = torch.load('depth.pth')
+loaded_dict_enc = torch.load('encoder.pth',map_location=device)
+loaded_dict_dec = torch.load('depth.pth',map_location=device)
 filtered_dict_enc = {k: v for k, v in loaded_dict_enc.items() if k in depth_encoder.state_dict()}
 depth_encoder.load_state_dict(filtered_dict_enc)
 ckp_depth_decoder= {k: v for k, v in loaded_dict_dec.items() if k in depth_decoder.state_dict()}
