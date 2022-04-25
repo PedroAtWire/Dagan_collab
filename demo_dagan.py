@@ -55,7 +55,7 @@ def find_best_frame(source, driving, cpu=False):
         return kp
 
     fa = face_alignment.FaceAlignment(face_alignment.LandmarksType._2D, flip_input=True,
-                                      device='cpu')
+                                      device='cpu' if cpu else 'cuda')
     kp_source = fa.get_landmarks(255 * source)[0]
     kp_source = normalize_kp(kp_source)
     norm  = float('inf')
@@ -126,7 +126,7 @@ generator = G.SPADEDepthAwareGenerator(**config['model_params']['generator_param
 config['model_params']['common_params']['num_channels'] = 4
 kp_detector = KPD.KPDetector(**config['model_params']['kp_detector_params'],**config['model_params']['common_params'])
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
+cpu = False if torch.cuda.is_available() else True
 
 g_checkpoint = torch.load("generator.pt", map_location=device)
 kp_checkpoint = torch.load("kp_detector.pt", map_location=device)
@@ -182,12 +182,12 @@ with torch.inference_mode():
 
 
 
-    i = find_best_frame(source_image, driving_video)
+    i = find_best_frame(source_image, driving_video,cpu)
     print ("Best frame: " + str(i))
     driving_forward = driving_video[i:]
     driving_backward = driving_video[:(i+1)][::-1]
-    sources_forward, drivings_forward, predictions_forward,depth_forward = make_animation(source_image, driving_forward, generator, kp_detector, relative=True, adapt_movement_scale=True, cpu=False)
-    sources_backward, drivings_backward, predictions_backward,depth_backward = make_animation(source_image, driving_backward, generator, kp_detector, relative=True, adapt_movement_scale=True, cpu=False)
+    sources_forward, drivings_forward, predictions_forward,depth_forward = make_animation(source_image, driving_forward, generator, kp_detector, relative=True, adapt_movement_scale=True, cpu=cpu)
+    sources_backward, drivings_backward, predictions_backward,depth_backward = make_animation(source_image, driving_backward, generator, kp_detector, relative=True, adapt_movement_scale=True, cpu=cpu)
     predictions = predictions_backward[::-1] + predictions_forward[1:]
     sources = sources_backward[::-1] + sources_forward[1:]
     drivings = drivings_backward[::-1] + drivings_forward[1:]
