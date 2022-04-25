@@ -55,7 +55,7 @@ def find_best_frame(source, driving, cpu=False):
         return kp
 
     fa = face_alignment.FaceAlignment(face_alignment.LandmarksType._2D, flip_input=True,
-                                      device='cpu' if cpu else 'cuda')
+                                      device='cpu')
     kp_source = fa.get_landmarks(255 * source)[0]
     kp_source = normalize_kp(kp_source)
     norm  = float('inf')
