@@ -6,10 +6,7 @@ import subprocess
 
 #os.chdir('Restormer')
 
-# Download sample images
-os.system("wget https://github.com/swz30/Restormer/releases/download/v1.0/sample_images.zip")
-shutil.unpack_archive('sample_images.zip')
-os.remove('sample_images.zip')
+
 
 
 examples = [['project/cartoon2.jpg','project/video1.mp4'],
