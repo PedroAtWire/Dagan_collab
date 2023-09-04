@@ -3,6 +3,7 @@ certifi==2021.10.8
 cycler==0.11.0
 fonttools==4.33.2
 grpcio==1.44.0
+gradio
 imageio==2.17.0
 importlib-metadata==4.11.3
 joblib==1.1.0
