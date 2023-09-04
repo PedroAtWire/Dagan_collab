@@ -120,7 +120,7 @@ def make_animation(source_image, driving_video, generator, kp_detector, relative
             depth_gray.append(gray_driving)
     return sources, drivings, predictions,depth_gray
 with open("config/vox-adv-256.yaml") as f:
-    config = yaml.load(f)
+    config = yaml.load(f, Loader=yaml.SafeLoader)
 
 generator = G.SPADEDepthAwareGenerator(**config['model_params']['generator_params'],**config['model_params']['common_params'])
 config['model_params']['common_params']['num_channels'] = 4
