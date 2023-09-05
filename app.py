@@ -64,4 +64,4 @@ gr.Interface(
     theme ="huggingface",
     examples=examples,
     allow_flagging=False,
-    ).launch(debug=False,enable_queue=True)
+    ).launch(debug=False,enable_queue=True,share=True)
