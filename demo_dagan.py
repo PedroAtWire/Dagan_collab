@@ -194,7 +194,7 @@ with torch.inference_mode():
     drivings = drivings_backward[::-1] + drivings_forward[1:]
     depth_gray = depth_backward[::-1] + depth_forward[1:]
 
-    imageio.mimsave(args.output, [np.concatenate((img_as_ubyte(s),img_as_ubyte(d),img_as_ubyte(p)),1) for (s,d,p) in zip(sources, drivings, predictions)], fps=fps)
+    imageio.mimsave(args.output, [np.concatenate((img_as_ubyte(p)),1) for (s,d,p) in zip(sources, drivings, predictions)], fps=fps)
     imageio.mimsave("gray.mp4", depth_gray, fps=fps)
     # merge the gray video
     animation = np.array(imageio.mimread(args.output,memtest=False))
