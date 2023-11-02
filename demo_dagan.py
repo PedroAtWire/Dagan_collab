@@ -202,7 +202,7 @@ with torch.inference_mode():
 
     src_dst = animation[:,:,:512,:]
     animate = animation[:,:,512:,:]
-    merge = np.concatenate((src_dst,gray,animate),2)
+    merge = np.concatenate((animate),2)
     imageio.mimsave(args.output, merge, fps=fps)
 
     # print(f"\nRestored images are saved at {out_dir}")
